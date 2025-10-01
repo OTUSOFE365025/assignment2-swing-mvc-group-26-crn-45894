@@ -6,11 +6,9 @@ public class MySwingMVCApp {
 		  // Assemble all the pieces of the MVC
 		  Model m = new Model("Sylvain", "Saurel");
 		  View v = new View("MVC with SSaurel");
-		  Controller c = new Controller(m, v);
-		  
-		  // create scanner
 		  Scanner scanner = new Scanner();
-		  
+		  CashRegister cashRegister = new CashRegister("products.txt");
+		  Controller c = new Controller(m, v, cashRegister, scanner);
 		  c.initController();
 	}
 

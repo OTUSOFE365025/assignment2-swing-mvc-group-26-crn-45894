@@ -1,65 +1,106 @@
+
 import java.awt.BorderLayout;
- 
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.JScrollPane;
+import javax.swing.JList;
+import javax.swing.DefaultListModel;
 
 public class View {
 	// View uses Swing framework to display UI to user
-	 private JFrame frame;
-	 private JLabel firstnameLabel;
-	 private JLabel lastnameLabel;
-	 private JTextField firstnameTextfield;
-	 private JTextField lastnameTextfield;
-	 private JButton firstnameSaveButton;
-	 private JButton lastnameSaveButton;
-	 private JButton hello;
-	 private JButton bye;
+	private JFrame frame;
+	private JLabel firstnameLabel;
+	private JLabel lastnameLabel;
+	private JTextField firstnameTextfield;
+	private JTextField lastnameTextfield;
+	private JButton firstnameSaveButton;
+	private JButton lastnameSaveButton;
+	private JButton hello;
+	private JButton bye;
+
+	// For Cash Register UI
+	private DefaultListModel<String> scannedItemsModel;
+	private JList<String> scannedItemsList;
+	private JScrollPane scannedItemsScrollPane;
+	private JLabel subtotalLabel;
 	 
-	 public View(String title) {
-	  frame = new JFrame(title);
-	  frame.getContentPane().setLayout(new BorderLayout());
-	  frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	  frame.setSize(500, 120);
-	  frame.setLocationRelativeTo(null);
-	  frame.setVisible(true);
-	 
-	  // Create UI elements
-	  firstnameLabel = new JLabel("Firstname :");
-	  lastnameLabel = new JLabel("Lastname :");
-	  firstnameTextfield = new JTextField();
-	  lastnameTextfield = new JTextField();
-	  firstnameSaveButton = new JButton("Save firstname");
-	  lastnameSaveButton = new JButton("Save lastname");
-	  hello = new JButton("Hello!");
-	  bye = new JButton("Bye!");
-	 
-	  // Add UI element to frame
-	  GroupLayout layout = new GroupLayout(frame.getContentPane());
-	  layout.setAutoCreateGaps(true);
-	  layout.setAutoCreateContainerGaps(true);
-	  layout.setHorizontalGroup(layout.createSequentialGroup()
-	    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(firstnameLabel)
-	    .addComponent(lastnameLabel))
-	    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(firstnameTextfield)
-	    .addComponent(lastnameTextfield))
-	    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(firstnameSaveButton)
-	    .addComponent(lastnameSaveButton))
-	    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(hello)
-	    .addComponent(bye)));
-	  layout.setVerticalGroup(layout.createSequentialGroup()
-	    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(firstnameLabel)
-	    .addComponent(firstnameTextfield).addComponent(firstnameSaveButton).addComponent(hello))
-	    .addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE).addComponent(lastnameLabel)
-	    .addComponent(lastnameTextfield).addComponent(lastnameSaveButton).addComponent(bye)));
-	 
-	  layout.linkSize(SwingConstants.HORIZONTAL, firstnameSaveButton, lastnameSaveButton);
-	  layout.linkSize(SwingConstants.HORIZONTAL, hello, bye);
-	  frame.getContentPane().setLayout(layout);
-	 }
+	public View(String title) {
+		frame = new JFrame(title);
+		frame.getContentPane().setLayout(new BorderLayout());
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(700, 350);
+		frame.setLocationRelativeTo(null);
+		frame.setVisible(true);
+
+		// Create UI elements
+		firstnameLabel = new JLabel("Firstname :");
+		lastnameLabel = new JLabel("Lastname :");
+		firstnameTextfield = new JTextField();
+		lastnameTextfield = new JTextField();
+		firstnameSaveButton = new JButton("Save firstname");
+		lastnameSaveButton = new JButton("Save lastname");
+		hello = new JButton("Hello!");
+		bye = new JButton("Bye!");
+
+		// Cash Register UI
+		scannedItemsModel = new DefaultListModel<>();
+		scannedItemsList = new JList<>(scannedItemsModel);
+		scannedItemsScrollPane = new JScrollPane(scannedItemsList);
+		subtotalLabel = new JLabel("Subtotal: $0.00");
+
+		// Layout
+		GroupLayout layout = new GroupLayout(frame.getContentPane());
+		layout.setAutoCreateGaps(true);
+		layout.setAutoCreateContainerGaps(true);
+		layout.setHorizontalGroup(layout.createSequentialGroup()
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addComponent(firstnameLabel)
+				.addComponent(lastnameLabel)
+				.addComponent(scannedItemsScrollPane)
+				.addComponent(subtotalLabel))
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addComponent(firstnameTextfield)
+				.addComponent(lastnameTextfield))
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addComponent(firstnameSaveButton)
+				.addComponent(lastnameSaveButton))
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addComponent(hello)
+				.addComponent(bye)));
+		layout.setVerticalGroup(layout.createSequentialGroup()
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+				.addComponent(firstnameLabel)
+				.addComponent(firstnameTextfield)
+				.addComponent(firstnameSaveButton)
+				.addComponent(hello))
+			.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+				.addComponent(lastnameLabel)
+				.addComponent(lastnameTextfield)
+				.addComponent(lastnameSaveButton)
+				.addComponent(bye))
+			.addComponent(scannedItemsScrollPane)
+			.addComponent(subtotalLabel));
+
+		layout.linkSize(SwingConstants.HORIZONTAL, firstnameSaveButton, lastnameSaveButton);
+		layout.linkSize(SwingConstants.HORIZONTAL, hello, bye);
+		frame.getContentPane().setLayout(layout);
+	}
+	// Cash Register UI methods
+	public void addScannedItem(String item) {
+		scannedItemsModel.addElement(item);
+	}
+
+	public void clearScannedItems() {
+		scannedItemsModel.clear();
+	}
+
+	public void setSubtotal(double subtotal) {
+		subtotalLabel.setText(String.format("Subtotal: $%.2f", subtotal));
+	}
 	 
 	 public JFrame getFrame() {
 	  return frame;

@@ -9,9 +9,14 @@ import javax.swing.SwingConstants;
 import javax.swing.JScrollPane;
 import javax.swing.JList;
 import javax.swing.DefaultListModel;
+import javax.swing.ListCellRenderer;
+import java.awt.Component;
+import java.awt.Font;
 
 public class View {
-	// View uses Swing framework to display UI to user
+	// View uses Swing framework to display the application's UI.
+	//	This class builds the form and exposes a few simple methods
+	// to update the scanned items list and the subtotal label.
 	private JFrame frame;
 	private JLabel firstnameLabel;
 	private JLabel lastnameLabel;
@@ -49,6 +54,29 @@ public class View {
 		// Cash Register UI
 		scannedItemsModel = new DefaultListModel<>();
 		scannedItemsList = new JList<>(scannedItemsModel);
+		// Use a monospaced font so formatted columns align
+		scannedItemsList.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+		// Simple left-aligned renderer that uses JLabel so padding/monospace works
+		scannedItemsList.setCellRenderer(new ListCellRenderer<String>() {
+			private final JLabel lbl = new JLabel();
+			{
+				lbl.setOpaque(true);
+				lbl.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 12));
+			}
+			@Override
+			public Component getListCellRendererComponent(JList<? extends String> list, String value, int index,
+					boolean isSelected, boolean cellHasFocus) {
+				lbl.setText(value);
+				if (isSelected) {
+					lbl.setBackground(list.getSelectionBackground());
+					lbl.setForeground(list.getSelectionForeground());
+				} else {
+					lbl.setBackground(list.getBackground());
+					lbl.setForeground(list.getForeground());
+				}
+				return lbl;
+			}
+		});
 		scannedItemsScrollPane = new JScrollPane(scannedItemsList);
 		subtotalLabel = new JLabel("Subtotal: $0.00");
 

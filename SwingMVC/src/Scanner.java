@@ -1,8 +1,15 @@
-// This window emulates the scanning of an item. Every time the buttom is pressed
-// it will send a notification of a UPC code
-
+/**
+ * Simple scanner window used for testing the cash register.
+ *
+ * This class provides a small Swing frame with a single "Scan" button.
+ * Each time the button is pressed the Controller will request a random
+ * UPC code from this class. The UPCs are loaded from a small text file.
+ *
+ * I kept the implementation intentionally minimal so the focus stays
+ * on the MVC wiring in the assignment.
+ */
 import java.awt.BorderLayout;
- 
+
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,11 +25,12 @@ import java.util.List;
 import java.util.Random;
 
 public class Scanner {
-	// Scanner uses Swing framework to create a UPC code
+	// Swing components for the tiny scanner UI
 	private JFrame frame;
 	private JPanel scannerPanel;
 	private JButton scanButton;
 
+	// File that contains product definitions (UPC is first token on each line)
 	private String productsFile = "products.txt";
 	private List<String> upcList = null;
 
@@ -31,19 +39,19 @@ public class Scanner {
 		frame.getContentPane().setLayout(new BorderLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(100, 100);
-		frame.setLocation(300,50);
+		frame.setLocation(300, 50);
 		frame.setVisible(true);
 
-		// Create UI elements
+		// Build UI
 		scanButton = new JButton("Scan");
 		scannerPanel = new JPanel();
 
-		// Add UI element to frame
 		scannerPanel.add(scanButton);
 		frame.getContentPane().add(scannerPanel);
-		// Remove default action listener; let Controller handle scan events
+		// Note: Controller attaches the action listener to the button
 	}
 
+	// Load the UPC codes from the products file into memory
 	private void loadUPCCodes() {
 		upcList = new ArrayList<>();
 		try (BufferedReader br = new BufferedReader(new FileReader(productsFile))) {
@@ -59,6 +67,7 @@ public class Scanner {
 		}
 	}
 
+	// Return a random UPC from the loaded list (used to simulate scanning)
 	public String getRandomUPC() {
 		if (upcList == null || upcList.isEmpty()) {
 			loadUPCCodes();
@@ -72,6 +81,7 @@ public class Scanner {
 		return upcList.get(idx);
 	}
 
+	// Getters and setters (kept for testability in the assignment)
 	public JFrame getFrame() {
 		return frame;
 	}
@@ -94,7 +104,6 @@ public class Scanner {
 
 	public void setScanButton(JButton scanButton) {
 		this.scanButton = scanButton;
-	}	 
-	 
+	}
 
 }

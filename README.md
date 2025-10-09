@@ -42,14 +42,6 @@ This project demonstrates an MVC (Model-View-Controller) design using Java Swing
 
 ---
 
-## Documentation
-
-- `SwingMVC/swing_framework_summary.md`: Swing summary and class diagram
-- `SwingMVC/mvc_analysis.md`: MVC implementation explanation
-- `SwingMVC/scan_sequence_diagram.md`: Scan process sequence diagram
-
----
-
 ## Answers to Assignment Questions
 
 ### Question 1: What is Swing?

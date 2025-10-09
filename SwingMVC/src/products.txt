@@ -1,0 +1,10 @@
+12345 Coffee 8.32
+67890 Muffin 2.50
+11111 Bagel 3.00
+22222 Tea 1.75
+33333 Sandwich 5.50
+44444 Juice 2.99
+55555 Donut 1.25
+66666 Cookie 0.99
+77777 Salad 4.25
+88888 Water 1.00

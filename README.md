@@ -58,10 +58,37 @@ Swing is Java’s long-standing GUI toolkit that provides a rich set of platform
 
 ### Question 2: How Does the Example Implement MVC?
 
-Model holds data; View builds the Swing UI; Controller attaches listeners and updates model/state (see listeners and actions).
+#### Model.java
 
-This is Swing MVC / Passive-View: the model doesn’t notify the view; controller directly sets fields / shows dialogs. Conventional textbook MVC often uses observer callbacks from model to view.
+Stores the application’s data (firstname, lastname).
 
+Provides getter and setter methods to update and retrieve the data.
+
+Contains no UI or event-handling logic.
+
+#### View.java
+
+Builds the Swing graphical interface using labels, text fields, and buttons.
+
+Displays data from the model and allows the user to enter new information.
+
+Provides getter methods to let the controller access its buttons and text fields.
+
+#### Controller.java
+
+Connects the View and the Model.
+
+Registers listeners on the View’s buttons (Save firstname, Save lastname, Hello, Bye).
+
+Updates the Model when buttons are pressed and displays messages with JOptionPane.
+
+Acts as the logic bridge between user actions and data updates.
+
+#### MySwingMVCApp.java
+
+Assembles the MVC structure by creating the Model, View, and Controller.
+
+Starts the application by initializing the controller logic.
 
 ### Question 4: Sequence Diagram
 
